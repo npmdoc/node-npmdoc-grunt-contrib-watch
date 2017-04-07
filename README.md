@@ -1,11 +1,13 @@
-# api documentation for  [grunt-contrib-watch (v1.0.0)](https://github.com/gruntjs/grunt-contrib-watch)  [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch)
+# api documentation for  [grunt-contrib-watch (v1.0.0)](https://github.com/gruntjs/grunt-contrib-watch)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-watch.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-watch) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch)
 #### Run predefined tasks whenever watched file patterns are added, changed or deleted
 
 [![NPM](https://nodei.co/npm/grunt-contrib-watch.png?downloads=true)](https://www.npmjs.com/package/grunt-contrib-watch)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screen-capture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-grunt_contrib_watch_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build..beta..travis-ci.org/apidoc.html)
+[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-grunt-contrib-watch_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/apidoc.html)
 
-![package-listing](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screen-capture.npmPackageListing.svg)
+![npmPackageListing](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screenCapture.npmPackageListing.svg)
+
+![npmPackageDependencyTree](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screenCapture.npmPackageDependencyTree.svg)
 
 
 
