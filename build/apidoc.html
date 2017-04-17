@@ -61,12 +61,264 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-watch">module grunt-contrib-watch</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-watch.grunt-contrib-watch">
+            function <span class="apidocSignatureSpan"></span>grunt-contrib-watch
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-watch.toString">
+            function <span class="apidocSignatureSpan">grunt-contrib-watch.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-watch.toString">module grunt-contrib-watch.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-watch.toString.toString">
+            function <span class="apidocSignatureSpan">grunt-contrib-watch.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.grunt-contrib-watch" id="apidoc.module.grunt-contrib-watch">module grunt-contrib-watch</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-watch.grunt-contrib-watch" id="apidoc.element.grunt-contrib-watch.grunt-contrib-watch">
+        function <span class="apidocSignatureSpan"></span>grunt-contrib-watch
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-contrib-watch = function (grunt) {
+
+  var taskrun = require(&#x27;./lib/taskrunner&#x27;)(grunt);
+
+  // Default date format logged
+  var dateFormat = function(time) {
+    grunt.log.writeln(String(
+      &#x27;Completed in &#x27; +
+      time.toFixed(3) +
+      &#x27;s at &#x27; +
+      (new Date()).toString()
+    ).cyan + &#x27; - &#x27; + waiting);
+  };
+
+  // When task runner has started
+  taskrun.on(&#x27;start&#x27;, function() {
+    Object.keys(changedFiles).forEach(function(filepath) {
+      // Log which file has changed, and how.
+      grunt.log.ok(&#x27;File &#x22;&#x27; + filepath + &#x27;&#x22; &#x27; + changedFiles[filepath] + &#x27;.&#x27;);
+    });
+    // Reset changedFiles
+    changedFiles = Object.create(null);
+  });
+
+  // When task runner has ended
+  taskrun.on(&#x27;end&#x27;, function(time) {
+    if (time &#x3e; 0) {
+      dateFormat(time);
+    }
+  });
+
+  // When a task run has been interrupted
+  taskrun.on(&#x27;interrupt&#x27;, function() {
+    grunt.log.writeln(&#x27;&#x27;).write(&#x27;Scheduled tasks have been interrupted...&#x27;.yellow);
+  });
+
+  // When taskrun is reloaded
+  taskrun.on(&#x27;reload&#x27;, function() {
+    taskrun.clearRequireCache(Object.keys(changedFiles));
+    grunt.log.writeln(&#x27;&#x27;).writeln(&#x27;Reloading watch config...&#x27;.cyan);
+  });
+
+  grunt.registerTask(&#x27;watch&#x27;, &#x27;Run predefined tasks whenever watched files change.&#x27;, function(target) {
+    var self = this;
+    var name = self.name || &#x27;watch&#x27;;
+
+    // Close any previously opened watchers
+    watchers.forEach(function(watcher) {
+      watcher.close();
+    });
+    watchers = [];
+
+    // Never gonna give you up, never gonna let you down
+    if (grunt.config([name, &#x27;options&#x27;, &#x27;forever&#x27;]) !== false) {
+      taskrun.forever();
+    }
+
+    // If a custom dateFormat function
+    var df = grunt.config([name, &#x27;options&#x27;, &#x27;dateFormat&#x27;]);
+    if (typeof df === &#x27;function&#x27;) {
+      dateFormat = df;
+    }
+
+    if (taskrun.running === false) {
+      grunt.log.writeln(waiting);
+    }
+
+    // Initialize taskrun
+    var targets = taskrun.init(name, {target: target});
+
+    targets.forEach(function(target) {
+      if (typeof target.files === &#x27;string&#x27;) {
+        target.files = [target.files];
+      }
+
+      // Process into raw patterns
+      var patterns = _.chain(target.files).flatten().map(function(pattern) {
+        return grunt.config.process(pattern);
+      }).value();
+
+      // Validate the event option
+      if (typeof target.options.event === &#x27;string&#x27;) {
+        target.options.event = [target.options.event];
+      }
+
+      var eventCwd = process.cwd();
+      if (target.options.cwd &#x26;&#x26; target.options.cwd.event) {
+        eventCwd = target.options.cwd.event;
+      }
+
+      // Set cwd if options.cwd.file is set
+      if (typeof target.options.cwd !== &#x27;string&#x27; &#x26;&#x26; target.options.cwd.files) {
+        target.options.cwd = target.options.cwd.files;
+      }
+
+      // Create watcher per target
+      watchers.push(new Gaze(patterns, target.options, function(err) {
+        if (err) {
+          if (typeof err === &#x27;string&#x27;) {
+            err = new Error(err);
+          }
+          grunt.log.writeln(&#x27;ERROR&#x27;.red);
+          grunt.fatal(err);
+          return taskrun.done();
+        }
+
+        // Log all watched files with --verbose set
+        if (grunt.option(&#x27;verbose&#x27;)) {
+          var watched = this.watched();
+          Object.keys(watched).forEach(function(watchedDir) {
+            watched[watchedDir].forEach(function(watchedFile) {
+              grunt.log.writeln(&#x27;Watching &#x27; + path.relative(process.cwd(), watchedFile) + &#x27; for changes.&#x27;);
+            });
+          });
+        }
+
+        // On changed/added/deleted
+        this.on(&#x27;all&#x27;, function(status, filepath) {
+
+          // Skip events not specified
+          if (!_.contains(target.options.event, &#x27;all&#x27;) &#x26;&#x26;
+              !_.contains(target.options.event, status)) {
+            return;
+          }
+
+          filepath = path.relative(eventCwd, filepath);
+
+          // Skip empty filepaths
+          if (filepath === &#x27;&#x27;) {
+            return;
+          }
+
+          // If Gruntfile.js changed, reload self task
+          if (target.options.reload || /gruntfile\.(js|coffee)/i.test(filepath)) {
+            taskrun.reload = true;
+          }
+
+          // Emit watch events ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-watch.toString" id="apidoc.element.grunt-contrib-watch.toString">
+        function <span class="apidocSignatureSpan">grunt-contrib-watch.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+This is *only a task level option* and cannot be configured per target. By default when the watch has finished running tasks it
+will display the message `Completed in 1.301s at Thu Jul 18 2013 14:58:21 GMT-0700 (PDT) - Waiting...`. You can override this message
+ by supplying your own function:
+
+```js
+watch: {
+options: {
+  dateFormat: function(time) {
+    grunt.log.writeln(&#x27;The watch finished in &#x27; + time + &#x27;ms at&#x27; + (new Date()).<span class="apidocCodeKeywordSpan
+">toString</span>());
+    grunt.log.writeln(&#x27;Waiting for more changes...&#x27;);
+  },
+},
+scripts: {
+  files: &#x27;**/*.js&#x27;,
+  tasks: &#x27;jshint&#x27;,
+},
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-contrib-watch.toString" id="apidoc.module.grunt-contrib-watch.toString">module grunt-contrib-watch.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-watch.toString.toString" id="apidoc.element.grunt-contrib-watch.toString.toString">
+        function <span class="apidocSignatureSpan">grunt-contrib-watch.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+This is *only a task level option* and cannot be configured per target. By default when the watch has finished running tasks it
+will display the message `Completed in 1.301s at Thu Jul 18 2013 14:58:21 GMT-0700 (PDT) - Waiting...`. You can override this message
+ by supplying your own function:
+
+```js
+watch: {
+options: {
+  dateFormat: function(time) {
+    grunt.log.writeln(&#x27;The watch finished in &#x27; + time + &#x27;ms at&#x27; + (new Date()).<span class="apidocCodeKeywordSpan
+">toString</span>());
+    grunt.log.writeln(&#x27;Waiting for more changes...&#x27;);
+  },
+},
+scripts: {
+  files: &#x27;**/*.js&#x27;,
+  tasks: &#x27;jshint&#x27;,
+},
+...</pre></li>
+    </ul>
+
 
 </div>
 

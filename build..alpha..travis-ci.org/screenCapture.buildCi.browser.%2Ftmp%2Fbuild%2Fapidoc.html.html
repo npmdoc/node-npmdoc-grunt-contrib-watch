@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/gruntjs/grunt-contrib-watch"
-
-    >grunt-contrib-watch (v1.0.0)</a>
+    <a href="https://github.com/gruntjs/grunt-contrib-watch">grunt-contrib-watch (v1.0.0)</a>
 </h1>
 <h4>Run predefined tasks whenever watched file patterns are added, changed or deleted</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-watch">module grunt-contrib-watch</a><ol>
 
@@ -109,49 +102,49 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">grunt-contrib-watch = function (grunt) {
 
-  var taskrun = require(&#x27;./lib/taskrunner&#x27;)(grunt);
+  var taskrun = require('./lib/taskrunner')(grunt);
 
   // Default date format logged
   var dateFormat = function(time) {
     grunt.log.writeln(String(
-      &#x27;Completed in &#x27; +
+      'Completed in ' +
       time.toFixed(3) +
-      &#x27;s at &#x27; +
+      's at ' +
       (new Date()).toString()
-    ).cyan + &#x27; - &#x27; + waiting);
+    ).cyan + ' - ' + waiting);
   };
 
   // When task runner has started
-  taskrun.on(&#x27;start&#x27;, function() {
+  taskrun.on('start', function() {
     Object.keys(changedFiles).forEach(function(filepath) {
       // Log which file has changed, and how.
-      grunt.log.ok(&#x27;File &#x22;&#x27; + filepath + &#x27;&#x22; &#x27; + changedFiles[filepath] + &#x27;.&#x27;);
+      grunt.log.ok('File "' + filepath + '" ' + changedFiles[filepath] + '.');
     });
     // Reset changedFiles
     changedFiles = Object.create(null);
   });
 
   // When task runner has ended
-  taskrun.on(&#x27;end&#x27;, function(time) {
-    if (time &#x3e; 0) {
+  taskrun.on('end', function(time) {
+    if (time &gt; 0) {
       dateFormat(time);
     }
   });
 
   // When a task run has been interrupted
-  taskrun.on(&#x27;interrupt&#x27;, function() {
-    grunt.log.writeln(&#x27;&#x27;).write(&#x27;Scheduled tasks have been interrupted...&#x27;.yellow);
+  taskrun.on('interrupt', function() {
+    grunt.log.writeln('').write('Scheduled tasks have been interrupted...'.yellow);
   });
 
   // When taskrun is reloaded
-  taskrun.on(&#x27;reload&#x27;, function() {
+  taskrun.on('reload', function() {
     taskrun.clearRequireCache(Object.keys(changedFiles));
-    grunt.log.writeln(&#x27;&#x27;).writeln(&#x27;Reloading watch config...&#x27;.cyan);
+    grunt.log.writeln('').writeln('Reloading watch config...'.cyan);
   });
 
-  grunt.registerTask(&#x27;watch&#x27;, &#x27;Run predefined tasks whenever watched files change.&#x27;, function(target) {
+  grunt.registerTask('watch', 'Run predefined tasks whenever watched files change.', function(target) {
     var self = this;
-    var name = self.name || &#x27;watch&#x27;;
+    var name = self.name || 'watch';
 
     // Close any previously opened watchers
     watchers.forEach(function(watcher) {
@@ -160,13 +153,13 @@
     watchers = [];
 
     // Never gonna give you up, never gonna let you down
-    if (grunt.config([name, &#x27;options&#x27;, &#x27;forever&#x27;]) !== false) {
+    if (grunt.config([name, 'options', 'forever']) !== false) {
       taskrun.forever();
     }
 
     // If a custom dateFormat function
-    var df = grunt.config([name, &#x27;options&#x27;, &#x27;dateFormat&#x27;]);
-    if (typeof df === &#x27;function&#x27;) {
+    var df = grunt.config([name, 'options', 'dateFormat']);
+    if (typeof df === 'function') {
       dateFormat = df;
     }
 
@@ -178,7 +171,7 @@
     var targets = taskrun.init(name, {target: target});
 
     targets.forEach(function(target) {
-      if (typeof target.files === &#x27;string&#x27;) {
+      if (typeof target.files === 'string') {
         target.files = [target.files];
       }
 
@@ -188,46 +181,46 @@
       }).value();
 
       // Validate the event option
-      if (typeof target.options.event === &#x27;string&#x27;) {
+      if (typeof target.options.event === 'string') {
         target.options.event = [target.options.event];
       }
 
       var eventCwd = process.cwd();
-      if (target.options.cwd &#x26;&#x26; target.options.cwd.event) {
+      if (target.options.cwd &amp;&amp; target.options.cwd.event) {
         eventCwd = target.options.cwd.event;
       }
 
       // Set cwd if options.cwd.file is set
-      if (typeof target.options.cwd !== &#x27;string&#x27; &#x26;&#x26; target.options.cwd.files) {
+      if (typeof target.options.cwd !== 'string' &amp;&amp; target.options.cwd.files) {
         target.options.cwd = target.options.cwd.files;
       }
 
       // Create watcher per target
       watchers.push(new Gaze(patterns, target.options, function(err) {
         if (err) {
-          if (typeof err === &#x27;string&#x27;) {
+          if (typeof err === 'string') {
             err = new Error(err);
           }
-          grunt.log.writeln(&#x27;ERROR&#x27;.red);
+          grunt.log.writeln('ERROR'.red);
           grunt.fatal(err);
           return taskrun.done();
         }
 
         // Log all watched files with --verbose set
-        if (grunt.option(&#x27;verbose&#x27;)) {
+        if (grunt.option('verbose')) {
           var watched = this.watched();
           Object.keys(watched).forEach(function(watchedDir) {
             watched[watchedDir].forEach(function(watchedFile) {
-              grunt.log.writeln(&#x27;Watching &#x27; + path.relative(process.cwd(), watchedFile) + &#x27; for changes.&#x27;);
+              grunt.log.writeln('Watching ' + path.relative(process.cwd(), watchedFile) + ' for changes.');
             });
           });
         }
 
         // On changed/added/deleted
-        this.on(&#x27;all&#x27;, function(status, filepath) {
+        this.on('all', function(status, filepath) {
 
           // Skip events not specified
-          if (!_.contains(target.options.event, &#x27;all&#x27;) &#x26;&#x26;
+          if (!_.contains(target.options.event, 'all') &amp;&amp;
               !_.contains(target.options.event, status)) {
             return;
           }
@@ -235,7 +228,7 @@
           filepath = path.relative(eventCwd, filepath);
 
           // Skip empty filepaths
-          if (filepath === &#x27;&#x27;) {
+          if (filepath === '') {
             return;
           }
 
@@ -270,14 +263,14 @@ will display the message `Completed in 1.301s at Thu Jul 18 2013 14:58:21 GMT-07
 watch: {
 options: {
   dateFormat: function(time) {
-    grunt.log.writeln(&#x27;The watch finished in &#x27; + time + &#x27;ms at&#x27; + (new Date()).<span class="apidocCodeKeywordSpan
+    grunt.log.writeln('The watch finished in ' + time + 'ms at' + (new Date()).<span class="apidocCodeKeywordSpan
 ">toString</span>());
-    grunt.log.writeln(&#x27;Waiting for more changes...&#x27;);
+    grunt.log.writeln('Waiting for more changes...');
   },
 },
 scripts: {
-  files: &#x27;**/*.js&#x27;,
-  tasks: &#x27;jshint&#x27;,
+  files: '**/*.js',
+  tasks: 'jshint',
 },
 ...</pre></li>
     </ul>
@@ -307,14 +300,14 @@ will display the message `Completed in 1.301s at Thu Jul 18 2013 14:58:21 GMT-07
 watch: {
 options: {
   dateFormat: function(time) {
-    grunt.log.writeln(&#x27;The watch finished in &#x27; + time + &#x27;ms at&#x27; + (new Date()).<span class="apidocCodeKeywordSpan
+    grunt.log.writeln('The watch finished in ' + time + 'ms at' + (new Date()).<span class="apidocCodeKeywordSpan
 ">toString</span>());
-    grunt.log.writeln(&#x27;Waiting for more changes...&#x27;);
+    grunt.log.writeln('Waiting for more changes...');
   },
 },
 scripts: {
-  files: &#x27;**/*.js&#x27;,
-  tasks: &#x27;jshint&#x27;,
+  files: '**/*.js',
+  tasks: 'jshint',
 },
 ...</pre></li>
     </ul>
@@ -328,3 +321,4 @@ scripts: {
     ]
 </div>
 </div>
+</body></html>
