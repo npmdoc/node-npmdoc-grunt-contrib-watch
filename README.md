@@ -1,9 +1,11 @@
 # api documentation for  [grunt-contrib-watch (v1.0.0)](https://github.com/gruntjs/grunt-contrib-watch)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-watch.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-watch) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch)
 #### Run predefined tasks whenever watched file patterns are added, changed or deleted
 
-[![NPM](https://nodei.co/npm/grunt-contrib-watch.png?downloads=true)](https://www.npmjs.com/package/grunt-contrib-watch)
+[![NPM](https://nodei.co/npm/grunt-contrib-watch.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/grunt-contrib-watch)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-grunt-contrib-watch_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-grunt-contrib-watch/build/screenCapture.npmPackageListing.svg)
 
@@ -129,33 +131,26 @@
     "main": "tasks/watch.js",
     "maintainers": [
         {
-            "name": "tkellen",
-            "email": "tyler@sleekcode.net"
+            "name": "tkellen"
         },
         {
-            "name": "cowboy",
-            "email": "cowboy@rj3.net"
+            "name": "cowboy"
         },
         {
-            "name": "shama",
-            "email": "kyle@dontkry.com"
+            "name": "shama"
         },
         {
-            "name": "vladikoff",
-            "email": "vlad@vladikoff.com"
+            "name": "vladikoff"
         },
         {
-            "name": "sindresorhus",
-            "email": "sindresorhus@gmail.com"
+            "name": "sindresorhus"
         },
         {
-            "name": "jmeas",
-            "email": "jellyes2@gmail.com"
+            "name": "jmeas"
         }
     ],
     "name": "grunt-contrib-watch",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/gruntjs/grunt-contrib-watch.git"
@@ -166,16 +161,6 @@
     "version": "1.0.0"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module grunt-contrib-watch](#apidoc.module.grunt-contrib-watch)
-
-
-
-# <a name="apidoc.module.grunt-contrib-watch"></a>[module grunt-contrib-watch](#apidoc.module.grunt-contrib-watch)
 
 
 
