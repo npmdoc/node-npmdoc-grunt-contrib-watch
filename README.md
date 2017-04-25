@@ -1,4 +1,7 @@
-# api documentation for  [grunt-contrib-watch (v1.0.0)](https://github.com/gruntjs/grunt-contrib-watch)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-watch.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-watch) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch)
+# npmdoc-grunt-contrib-watch
+
+#### basic api documentation for  [grunt-contrib-watch (v1.0.0)](https://github.com/gruntjs/grunt-contrib-watch)  [![npm package](https://img.shields.io/npm/v/npmdoc-grunt-contrib-watch.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-grunt-contrib-watch) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch.svg)](https://travis-ci.org/npmdoc/node-npmdoc-grunt-contrib-watch)
+
 #### Run predefined tasks whenever watched file patterns are added, changed or deleted
 
 [![NPM](https://nodei.co/npm/grunt-contrib-watch.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/grunt-contrib-watch)
@@ -158,7 +161,8 @@
     "scripts": {
         "test": "grunt test -v"
     },
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "bin": {}
 }
 ```
 
